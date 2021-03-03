@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodeQuiz</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <section id="page">
+        <highscore>
+            <a class="answer" href="leaderboard.html">View Highscores</a>
+        </highscore>
+        <timer>
+            <!-- <h2>Timer goes here</h2> -->
+            <div id="timerText"></div>
+        </timer>
+        <main>
+            <div id="preQuiz">
+                <h1>Coding Quiz Challenge</h1>
+                <p>Try to answer the following code-related questions within the time limit of 60 seconds. Keep in mind that incorrect answers will reduce your time by 15 seconds! Your final score is the time remaining. The quicker you answer correctly, the higher your score.</p>
+                <button id="btnStartQuiz">Start Quiz</button>
+            </div>
+            <div id="quiz" class="hide">
+                <!-- <button id="btnWrongAnswer">Wrong Answer</button> -->
+                <h2 id="qq">Question</h2>
+                <p id="aa1" class="answer" data-option="1"></p>
+                <p id="aa2" class="answer" data-option="2"></p>
+                <p id="aa3" class="answer" data-option="3"></p>
+                <p id="aa4" class="answer" data-option="4"></p>
+                <p id="info" class="hide">Time is up!</p>
+            </div>
+            <div id="initialsPrompt" class="hide">
+                <div class="container">
+                <h1>Leaderboard</h1>
+                <h2>Great job! You're future is very promising.</h2>
+                <h3>Please enter your initials to save your score in the leaderboard.</h3>
+                <form id="form">
+                    <input type="text" id="initials" placeholder="Enter your initials." />
+                    <button id="submit">Save Your Score</button>
+                </form>
+
+            </div>
+
+
+        </main>
+        <footer></footer>
+      </section>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
