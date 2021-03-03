@@ -25,7 +25,9 @@ The site can be reached at [PW Generator](https://mark-artim.github.io/CodeQuiz/
 
 The current website as of 2/22/2021 looks like this:
 
-![Live Site Screenshot](./assets/CodeQuiz_Screenshot.jpg)
+![Live Site Screenshot](./assets/CodeQuizHomePage.jpeg)
+![Live Site Screenshot](./assets/QuizinAction.jpeg)
+![Live Site Screenshot](./assets/CodeQuizLeadeboard.jpeg)
 
 
 ## Credits
