@@ -1,7 +1,7 @@
 
+const btnClearScores = document.getElementById("btnClearScores");
 
 function showScores() {
-    console.log("I am in the showScores function");
     var allScoresRaw = localStorage.getItem("highScore");
     var currentScores = []
     if(!!allScoresRaw) {
@@ -11,13 +11,22 @@ function showScores() {
           });
     } 
     for (let k = 0; k < currentScores.length; k++) {
-        console.log(currentScores[k]);
         var scoreDisplay = document.getElementById("rankings");
         let newListItem = document.createElement("li");
         newListItem.textContent = currentScores[k].initials+" - "+currentScores[k].score;
         scoreDisplay.appendChild(newListItem);
-        console.log(newListItem);
     }
 }
+
+btnClearScores.addEventListener("click", function (){
+    var r = confirm("Are you sure you want to clear all the scores?");
+    if (r == true) {
+        localStorage.clear();
+        location.reload();
+    } else {
+        return;
+    }
+    
+})
 
 showScores();

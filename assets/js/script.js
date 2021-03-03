@@ -68,6 +68,7 @@ while(i < questions.length+1) {
 qIndexArr = qIndexArr.sort(() => Math.random() - 0.5);
 console.log("qIndex:" + qIndexArr);
 
+// WHEN START BUTTON IS CLICKED
 btnStartQuiz.addEventListener("click", function () {
     document.getElementById("preQuiz").style.display="none";
     quiz.classList.remove("hide");
@@ -76,9 +77,6 @@ btnStartQuiz.addEventListener("click", function () {
     buildQuiz(currentQuestionIndex);
     intervalID = setInterval(function() {
         secondsLeft -= 1;
-        // secondsLeft -= 1 - penalty;
-        // penalty = 0;
-        // penaltyMessage = "";
         if(secondsLeft === 0) {
             clearInterval(intervalID);
             var infoText = document.getElementById("info");
@@ -90,6 +88,7 @@ btnStartQuiz.addEventListener("click", function () {
 })
 
 function buildQuiz(qnum) {
+    console.log(qnum);
     document.getElementById("qq").innerText = questions[qnum].question;
     document.getElementById("aa1").innerText = questions[qnum].answers.a;
     document.getElementById("aa2").innerText = questions[qnum].answers.b;
@@ -97,6 +96,7 @@ function buildQuiz(qnum) {
     document.getElementById("aa4").innerText = questions[qnum].answers.d;
 }
 
+//SAVE SCORE TO LOCAL STORAGE
 function saveScore(event) {
     event.preventDefault();
     console.log("YourScore after submit:" + yourScore);
@@ -109,10 +109,10 @@ function saveScore(event) {
     } 
     currentScores.push({initials: yourInitials, score: yourScore});
     localStorage.setItem("highScore", JSON.stringify(currentScores));
-    // localStorage.setItem("score", yourScore);
     location.href = "leaderboard.html";
 }
 
+// DISPLAY MOMENTARY USER FEEDBACK BASED ON ANSWER
 function showInfo(type) {
     var infoText = document.getElementById("info");
     if(type ==="correct"){
@@ -128,29 +128,32 @@ function showInfo(type) {
 
 // listen for click on a/b/c/d and evaluate if correct
 quiz.addEventListener("click", function(event) {
-    console.log(event);
+    if(secondsLeft < 1) {
+        return;
+    }
+    var infoText = document.getElementById("info");
+    infoText.classList.add("hide");
     var element = event.target;
     var userChoice = element.dataset.option;
     var correctAnswer = questions[currentQuestionIndex].correctAnswer;
-    console.log("correct answer: " + correctAnswer + "Question COunt: " + questions.length);
     if(userChoice === correctAnswer) {
         //answer is correct
         showInfo("correct");
-        console.log("Correct! CurrentQuestionIndex: " + currentQuestionIndex + "questions.length: " + questions.length);
         if(currentQuestionIndex < questions.length && secondsLeft > 0) {
             // last question or 1 more & time left
             if(currentQuestionIndex == questions.length - 1 && secondsLeft > 0) {
                 //if last question & time left you win
                 yourScore = secondsLeft;
-                console.log(yourScore);
                 initialsScreen.classList.remove("hide");
                 quiz.classList.add("hide");
                 clearInterval(intervalID);
             }
-            currentQuestionIndex++;
+            if(yourScore == "") {
+                currentQuestionIndex++;
             buildQuiz(currentQuestionIndex);
+            }
+            
         } else {
-            console.log("Times up! xxx");
             clearInterval(intervalID);
             var infoText = document.getElementById("info");
             infoText.textContent = "Time is up!";
@@ -158,23 +161,31 @@ quiz.addEventListener("click", function(event) {
         }
         
     } else {
-        secondsLeft -=15;
-        timerText.textContent = "Remaining time: " + secondsLeft;
-        showInfo("x");
-        console.log("wrong answer");
-        if(currentQuestionIndex < questions.length -1 && secondsLeft > 0) {
-            currentQuestionIndex++;
-            buildQuiz(currentQuestionIndex);
-        } else {
-            //time is up
-            console.log("Times up!");
+        if(currentQuestionIndex == questions.length - 1 && secondsLeft > 0) {
+            //if last question & time left you win even though you got last question wrong
+            secondsLeft -=15;
+            timerText.textContent = "Remaining time: " + secondsLeft;
+            yourScore = secondsLeft;
+            initialsScreen.classList.remove("hide");
+            quiz.classList.add("hide");
             clearInterval(intervalID);
-            var infoText = document.getElementById("info");
-            infoText.textContent = "Time is up!";
-            infoText.classList.remove("hide");
+        } else {
+            secondsLeft -=15;
+            timerText.textContent = "Remaining time: " + secondsLeft;
+            showInfo("x");
+            if(currentQuestionIndex < questions.length -1 && secondsLeft > 0) {
+                currentQuestionIndex++;
+                buildQuiz(currentQuestionIndex);
+            } else {
+                //time is up
+                clearInterval(intervalID);
+                var infoText = document.getElementById("info");
+                infoText.textContent = "Time is up!";
+                infoText.classList.remove("hide");
+            }
         }
+        
     }
     })
-// answer.classList.add("answer");
-// showScores();
+
 submit.addEventListener("click", saveScore);
