@@ -27,6 +27,22 @@
 
     }
   }
+
+  @media only screen and (hover: none) and (pointer: coarse){
+    #page {
+      grid-template-areas:
+        "highscore"
+        "timer"
+        "main"
+        "footer";
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr;
+      font-size: 2em;
+
+      }
+    }
+
+
   
   #page > highscore {
     grid-area: highscore;
