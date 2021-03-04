@@ -96,7 +96,7 @@
     transition: all 0.4s ease 0s;
   }
 
-  .btn #btnClearScores {
+  #btnClearScores {
     font-size: x-small;
     color: #fff;
     text-transform:capitalize;
